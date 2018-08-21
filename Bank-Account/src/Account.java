@@ -3,7 +3,7 @@
  */
 public class Account {
     public long id; //The unique account ID
-    private String user; //The name of the user
+    String user; //The name of the user
     private int hashedPassword; //Passwords are hashed using Java's default string hashing for now
     private double balance; //The amount of money in the account
     private boolean loggedIn = false; //Whether the user is logged in; false by default
@@ -24,8 +24,9 @@ public class Account {
      * Sets loggedIn to true if the password is correct or false if not
      * @param password the guessed password
      */
-    public void logIn(String password) {
+    public boolean logIn(String password) {
         loggedIn = (password.hashCode() == this.hashedPassword);
+        return loggedIn;
     }
 
     /**

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static java.util.Collections.max;
@@ -8,8 +7,8 @@ import static java.util.Collections.max;
  */
 public class AccountHandler {
 
-    AccountHandler instance;
-    HashMap<Long, Account> accounts;
+    private static AccountHandler instance;
+    HashMap<Long, Account> accounts = new HashMap<Long, Account>();
 
     AccountHandler() {}
 
@@ -17,11 +16,11 @@ public class AccountHandler {
      * Gets the singleton instance of the account handler
      * @return this
      */
-    public AccountHandler getInstance() {
-        if (this.instance == null) {
-            this.instance = new AccountHandler();
+    public static AccountHandler getInstance() {
+        if (instance == null) {
+            instance = new AccountHandler();
         }
-        return this.instance;
+        return instance;
     }
 
     /**
@@ -36,6 +35,15 @@ public class AccountHandler {
             long newId = max(this.accounts.keySet()) + 1;
             this.accounts.put(newId, new Account(newId, username, password));
         }
+    }
+
+    /**
+     * Searches the list of accounts for ones matching the username
+     * @param username the search keyword
+     * @return a list of account ids
+     */
+    public long[] findAccounts(String username) {
+        return this.accounts.keySet().stream().filter(it -> this.accounts.get(it).user == username).mapToLong(it -> it).toArray();
     }
 
 }
