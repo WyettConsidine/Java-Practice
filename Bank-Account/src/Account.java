@@ -1,5 +1,6 @@
 /**
- *
+ * A bank account
+ * So far, only stores user, password, and money
  */
 public class Account {
     public long id; //The unique account ID
@@ -41,17 +42,19 @@ public class Account {
      * Adds money to account
      * @param money how much to add
      */
-    public void addBalance(double money) {
+    public double addBalance(double money) {
         this.balance += money;
+        return this.balance;
     }
 
     /**
      * Removes money from account
      * @param money how much to remove
      */
-    public void removeBalance(double money) {
-        this.balance -= money;
-        //TODO: debt
+    public double removeBalance(double money) {
+        double initialBalance = this.balance;
+        this.balance = Math.max(this.balance - money, 0);
+        return initialBalance - this.balance;
     }
 
     /**
@@ -59,6 +62,13 @@ public class Account {
      */
     public double getBalance() {
         return this.balance;
+    }
+
+    /**
+     * @return user account name
+     */
+    public String toString() {
+        return "an account belonging to " + this.user + " with acct. number. " + this.id;
     }
 
 }

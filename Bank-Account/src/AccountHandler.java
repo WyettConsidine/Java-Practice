@@ -8,7 +8,7 @@ import static java.util.Collections.max;
 public class AccountHandler {
 
     private static AccountHandler instance;
-    HashMap<Long, Account> accounts = new HashMap<Long, Account>();
+    HashMap<Long, Account> accounts = new HashMap<>();
 
     AccountHandler() {}
 
@@ -43,7 +43,14 @@ public class AccountHandler {
      * @return a list of account ids
      */
     public long[] findAccounts(String username) {
-        return this.accounts.keySet().stream().filter(it -> this.accounts.get(it).user == username).mapToLong(it -> it).toArray();
+        return this.accounts.keySet().stream().filter(it -> this.accounts.get(it).user.equals(username)).mapToLong(val -> val).toArray();
+    }
+
+    /**
+     * @return a description
+     */
+    public String toString() {
+        return "the account handler of accounts for" + String.valueOf(this.accounts.values().stream().map(acc -> acc.user));
     }
 
 }
