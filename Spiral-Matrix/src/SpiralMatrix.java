@@ -1,15 +1,12 @@
 //(c) A+ Computer Science
 //www.apluscompsci.com
-//Name -
+//Name - Elia Gorokhovsky
 
 import java.util.Arrays;
 
-import static java.lang.System.*;
-
-public class SpiralMatrix
-{
+public class SpiralMatrix {
 	//define a matrix
-	private int[][] elements;
+	public int[][] elements;
 
 	/**
 	 * Fills a spiral matrix recursively
@@ -47,15 +44,13 @@ public class SpiralMatrix
 		}
 	}
 
-	public SpiralMatrix(int size)
-	{
+	public SpiralMatrix(int size) {
 		assert size >= 1;
 		this.elements = new int[size][size];
 		fillSpiral(0, 0, size, 0);
 	}
 
-	public String toString( )
-	{
+	public String toString( ) {
 		String output="";
 		for (int i = 0; i < this.elements.length; i++) {
 			output += Arrays.toString(this.elements[i]) + "\n";
