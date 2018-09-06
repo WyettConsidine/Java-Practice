@@ -13,7 +13,7 @@ public class ExpressionSolver {
         System.out.println("3 - 53 * 5 = " + solve("3 - 53 * 5"));
         System.out.println("3 / 5 = " + solve("3 / 5"));
         System.out.println("5 / 5 * 2 + 8 / 2 + 5 = " + solve("5 / 5 * 2 + 8 / 2 + 5"));
-        System.out.println("5 * 5 + 2 / 2 - 8 + 5 * 5 – 2 = " + solve("5 * 5 + 2 / 2 - 8 + 5 * 5 – 2"));
+        System.out.println("5 * 5 + 2 / 2 - 8 + 5 * 5 – 2 = " + solve("5 * 5 + 2 / 2 - 8 + 5 * 5 - 2"));
     }
 
     public static int solve(String input) {
