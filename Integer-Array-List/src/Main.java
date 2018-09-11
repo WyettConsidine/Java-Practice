@@ -18,6 +18,8 @@ public class Main {
         System.out.println("Remove 6: " + list);
         System.out.println("List length: " + list.size());
         System.out.println("List element 4: " + list.get(4));
+        list.add(5, 19);
+        System.out.println("Add 19 at index 5: " + list);
     }
 
 }

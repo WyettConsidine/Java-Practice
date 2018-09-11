@@ -40,7 +40,7 @@ public class IntegerArrayList {
         if (this.components.length < this.size) {
             this.increaseLength();
         }
-        System.arraycopy(this.components, index, this.components, index + 1, this.components.length - index);
+        System.arraycopy(this.components, index - 1, this.components, index, this.size - index);
         this.components[index] = element;
     }
 
@@ -49,6 +49,7 @@ public class IntegerArrayList {
      */
     public void clear() {
         this.components = new int[10];
+        this.size = 0;
     }
 
     /**
