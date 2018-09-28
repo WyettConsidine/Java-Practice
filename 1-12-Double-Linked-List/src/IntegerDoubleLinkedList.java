@@ -1,14 +1,14 @@
-import java.util.List;
-
 /**
  * A linked list of integers
  */
-public class IntegerLinkedList {
+public class IntegerDoubleLinkedList {
 
     //The first node
     Node head;
+    //The last node
+    Node tail;
 
-    public IntegerLinkedList() {}
+    public IntegerDoubleLinkedList() {}
 
     /**
      * Adds a Node with the given int to the end of the list
@@ -24,12 +24,23 @@ public class IntegerLinkedList {
         if (index < 0 || index > this.getSize()) {
             throw new ArrayIndexOutOfBoundsException("Get: index out of bounds");
         }
-        Node newNode = new Node(x, null);
-        if (this.head == null) {
+        Node newNode = new Node(x, null, null);
+        if (this.isEmpty()) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else if (index == 0) {
+            newNode.setNext(this.head);
+            this.head.setPrev(newNode);
             this.head = newNode;
         } else {
-            newNode.setNext(this.getNode(index - 1 ).getNext());
-            this.getNode(index - 1).setNext(newNode);
+            newNode.setNext(this.getForwardNode(index - 1).getNext());
+            this.getForwardNode(index - 1).setNext(newNode);
+            newNode.setPrev(this.getForwardNode(index - 1));
+            if (newNode.getNext() == null) {
+                this.tail = newNode;
+            } else {
+                newNode.getNext().setPrev(newNode);
+            }
         }
     }
 
@@ -46,6 +57,7 @@ public class IntegerLinkedList {
      */
     public void clear() {
         this.head = null;
+        this.tail = null;
     }
 
     /**
@@ -60,11 +72,29 @@ public class IntegerLinkedList {
      */
     private Node getNode(int index) {
         if (index < 0 || index > this.getSize()) {
-            throw new ArrayIndexOutOfBoundsException("Get: index out of bounds");
+            throw new ArrayIndexOutOfBoundsException("Get: index " + String.valueOf(index) +  " out of bounds");
         }
+        return index < this.getSize() / 2 ? this.getForwardNode(index) : this.getBackwardNode(index);
+    }
+
+    /**
+     * Gets the node at index by iterating forward from head
+     */
+    private Node getForwardNode(int index) {
         Node currentNode = this.head;
         for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
+        }
+        return currentNode;
+    }
+
+    /**
+     * Gets the node at index by iterating backward from head
+     */
+    private Node getBackwardNode(int index) {
+        Node currentNode = this.tail;
+        for (int i = this.getSize() - 1; i > index; i--) {
+            currentNode = currentNode.getPrev();
         }
         return currentNode;
     }
@@ -75,10 +105,17 @@ public class IntegerLinkedList {
     public void remove(int index) {
         if (index == 0) {
             this.head = this.head.getNext();
+            this.head.setPrev(null);
+            return;
+        }
+        if (index == this.getSize() - 1) {
+            this.tail = this.tail.getPrev();
+            this.tail.setNext(null);
             return;
         }
         Node prevNode = this.getNode(index - 1);
         prevNode.setNext(prevNode.getNext().getNext());
+        prevNode.getNext().setPrev(prevNode);
     }
 
     /**
@@ -105,15 +142,31 @@ public class IntegerLinkedList {
      * Returns a string representation of the array
      */
     public String toString() {
+        if (this.isEmpty()) return "[]";
         String representation = "[";
         Node currentNode = this.head;
         for (int i = 0; i < this.getSize(); i++) {
-            representation += currentNode.getElement() + ",";
+            representation += currentNode + ",";
             currentNode = currentNode.getNext();
         }
         representation = representation.substring(0, representation.length() - 1);
         representation += "]";
         return representation;
+    }
+
+    /**
+     * Returns a new linked list with the elements reversed
+     */
+    public IntegerDoubleLinkedList reverse() {
+        IntegerDoubleLinkedList newList = new IntegerDoubleLinkedList();
+        Node currentNode = this.tail;
+        for (int i = 0; i < this.getSize(); i++) {
+            newList.add(currentNode.getElement());
+            currentNode = currentNode.getPrev();
+        }
+        newList.tail = this.head;
+        assert this.head == currentNode;
+        return newList;
     }
 
 }
