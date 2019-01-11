@@ -1,0 +1,61 @@
+public class BST
+{
+    BstNode rootNode;
+    public BST(int i){
+        rootNode = new BstNode(i);
+    }
+    
+    public void addNode(int i){
+        BstNode currentNode = rootNode;
+        boolean finished = false;
+        do{
+            BstNode curLeftNode = currentNode.leftNode;
+            BstNode curRightNode = currentNode.rightNode;
+            int curIntData = currentNode.intData;
+            
+            if(i>curIntData){
+                if(curRightNode == null){
+                    currentNode.rightNode = new BstNode(i);
+                    finished = true;
+                }else{
+                    currentNode = curRightNode;
+                }
+            }else{
+                if(curLeftNode == null){                    
+                    currentNode.leftNode = new BstNode(i);
+                    finished = true;
+                }else{
+                    currentNode = curLeftNode;}
+                }
+            }while(!finished);
+        }
+    }
+    
+    public class BstNode
+{
+    int intData;
+    BstNode rightNode;
+    BstNode leftNode;
+    
+    public BstNode(int i){
+        leftNode = null;
+        rightNode = null;
+        intData = i;        
+    }
+}
+
+public class Tester
+{
+    public static void main(String args[]){
+        BST bstObj = new BST(50);
+        bstObj.addNode(56);
+        bstObj.addNode(52);
+        bstObj.addNode(25);
+        bstObj.addNode(74);
+        bstObj.addNode(54);
+    }
+}
+    
+    
+    
+    
